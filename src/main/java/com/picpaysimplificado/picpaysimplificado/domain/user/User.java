@@ -1,10 +1,8 @@
 package com.picpaysimplificado.picpaysimplificado.domain.user;
 
+import com.picpaysimplificado.picpaysimplificado.dtos.UserDTO;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
 
@@ -16,6 +14,7 @@ import java.math.BigDecimal;
 @Getter //Criação dos Getters
 @Setter //Criação dos Setters
 @AllArgsConstructor //Criação de um constructor que receba todos os argumentos
+@NoArgsConstructor
 @EqualsAndHashCode(of="id") //Chave primária da entidade, da tabela
 public class User {
     @Id
@@ -30,13 +29,21 @@ public class User {
     @Column(unique = true)
     private String email;
 
+    private String password;
 
     private BigDecimal balance; //Decimal grande - O saldo do Usuário
 
     @Enumerated(EnumType.STRING) //Armazena o valo da enumeração em STRING
     private UserType userType;
 
-    public User() {
-
+    public User(UserDTO data){
+        this.firstName = data.firstName();
+        this.lastName = data.lastName();
+        this.balance = data.balance();
+        this.userType = data.userType();
+        this.password = data.password();
+        this.document = data.document();
+        this.email = data.email();
     }
+
 }
